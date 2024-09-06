@@ -1,0 +1,9 @@
+{
+  "name": "@stayspot/util",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "react-error-boundary": "^4.0.13"
+  }
+}

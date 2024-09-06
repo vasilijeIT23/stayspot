@@ -1,0 +1,363 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  uid: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  image: String!
+  admin: Admin
+  manager: Manager
+  customer: Customer
+  credentials: Credentials
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type LoginOutput {
+  token: String!
+  user: User!
+}
+
+type GetUserOutput {
+  user: User!
+}
+
+type Customer {
+  uid: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  displayName: String!
+}
+
+type Admin {
+  uid: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Manager {
+  uid: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  displayName: String!
+  companyId: Float!
+  manager: Company
+}
+
+type Credentials {
+  uid: String!
+  email: String!
+}
+
+type Company {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  displayName: String!
+  description: String
+  managers: [Manager!]
+}
+
+type CreateCompanyOutput {
+  id: Float!
+  displayName: String!
+  description: String!
+}
+
+type Booking {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  pricePerDay: Float!
+  totalPrice: Float!
+  startDate: DateTime!
+  endDate: DateTime!
+  phoneNumber: String!
+  apartmentId: Float!
+  customerId: String!
+}
+
+type Accomodation {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  displayName: String!
+  description: String!
+  companyId: Float!
+  images: [String!]!
+  address: Address
+}
+
+type Address {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  address: String!
+  lat: Float!
+  lng: Float!
+  accomodationId: Float!
+}
+
+type CreateAccomodationWithAddressOutput {
+  accomodation: Accomodation!
+  address: Address!
+}
+
+type PaginationOutput {
+  accomodations: [Accomodation!]!
+  totalCount: Float!
+}
+
+type Apartment {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  displayName: String!
+  pricePerDay: Float!
+  area: Float!
+  sleepingUnits: Float!
+  aptFloor: Float!
+  aptNumber: Float!
+  accomodationId: Float!
+  type: SlotType!
+  booking: [Booking!]
+}
+
+enum SlotType {
+  STUDIO
+  ONE_BEDROOM
+  TWO_BEDROOM
+  THREE_BEDROOM
+  PENTHOUSE
+}
+
+type PaginationApartmentsOutput {
+  apartments: [Apartment!]!
+  totalCount: Float!
+}
+
+type AccomodationToApartments {
+  accomodation: Accomodation!
+  apartmentIds: [Int!]!
+}
+
+type FilterAccomodationsByDateOutput {
+  accomodationToApartments: [AccomodationToApartments!]
+}
+
+type Query {
+  users: [User!]!
+  findOne(getUserInput: GetUserInput!): GetUserOutput!
+  companies: [Company!]!
+  findBookingsByCompany(uid: String!): [Booking!]!
+  company(id: Float!): Company!
+  managers: [Manager!]!
+  manager(uid: String!): Manager!
+  accomodation(id: Float!): Accomodation!
+  accomodations: [Accomodation!]!
+  paginationFilter(paginationInput: PaginationInput!): PaginationOutput
+  apartment(id: Float!): Apartment!
+  apartments: [Apartment!]!
+  paginationFilterApartments(paginationInput: PaginationApartmentsInput!): PaginationApartmentsOutput!
+  filterAccomodationsByDate(dateInput: FilterAccomodationsByDateInput!): FilterAccomodationsByDateOutput
+  address(id: Float!): Address!
+  addresss: [Address!]!
+  booking(id: Float!): Booking!
+  bookings: [Booking!]!
+  findByUser(uid: String!): [Booking!]!
+}
+
+input GetUserInput {
+  uid: String!
+}
+
+input PaginationInput {
+  uid: String!
+  skip: Float!
+  take: Float!
+}
+
+input PaginationApartmentsInput {
+  skip: Float!
+  take: Float!
+  accomodationId: Float!
+}
+
+input FilterAccomodationsByDateInput {
+  startDate: DateTime!
+  endDate: DateTime!
+}
+
+type Mutation {
+  register(registerUserInput: RegisterUserInput!): User!
+  login(loginInput: LoginInput!): LoginOutput!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  changeEmail(changeEmailInput: ChangeEmailInput!): Boolean!
+  changePassword(changePasswordInput: ChangePasswordInput!): Boolean!
+  removeUser(uid: String!): User!
+  createCompany(createCompanyInput: CreateCompanyInput!): CreateCompanyOutput!
+  updateCompany(updateCompanyInput: UpdateCompanyInput!): Company!
+  removeCompany(id: Float!): Company!
+  createManager(createManagerInput: CreateManagerInput!): Manager!
+  updateManager(updateManagerInput: UpdateManagerInput!): Manager!
+  removeManager(uid: String!): Manager!
+  createAccomodation(createAccomodationInput: CreateAccomodationInput!): Accomodation!
+  createAccomodationWithAddress(createAccomodationWithAddressInput: CreateAccomodationWithAddressInput!): CreateAccomodationWithAddressOutput!
+  updateAccomodation(updateAccomodationInput: UpdateAccomodationInput!): Accomodation!
+  removeAccomodation(id: Float!): Accomodation!
+  createApartment(createApartmentInput: CreateApartmentInput!): Apartment!
+  updateApartment(updateApartmentInput: UpdateApartmentInput!): Apartment!
+  removeApartment(id: Float!): Apartment!
+  createAddress(createAddressInput: CreateAddressInput!): Address!
+  updateAddress(updateAddressInput: UpdateAddressInput!): Address!
+  removeAddress(id: Float!): Address!
+  createBooking(createBookingInput: CreateBookingInput!): Booking!
+  updateBooking(updateBookingInput: UpdateBookingInput!): Booking!
+  removeBooking(id: Float!): Booking!
+}
+
+input RegisterUserInput {
+  name: String!
+  image: String!
+  email: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  name: String
+  image: String
+  email: String
+  password: String
+  uid: String!
+}
+
+input ChangeEmailInput {
+  email: String!
+  newEmail: String!
+}
+
+input ChangePasswordInput {
+  email: String!
+  newPassword: String!
+}
+
+input CreateCompanyInput {
+  displayName: String!
+  description: String
+}
+
+input UpdateCompanyInput {
+  displayName: String
+  description: String
+  id: Float!
+}
+
+input CreateManagerInput {
+  uid: String!
+  displayName: String!
+  companyId: Float!
+}
+
+input UpdateManagerInput {
+  uid: String!
+  displayName: String
+  companyId: Float
+}
+
+input CreateAccomodationInput {
+  displayName: String!
+  description: String!
+  companyId: Float!
+  images: [String!]!
+}
+
+input CreateAccomodationWithAddressInput {
+  displayName: String!
+  description: String!
+  companyId: Float!
+  images: [String!]!
+  address: String!
+  lat: Float!
+  lng: Float!
+}
+
+input UpdateAccomodationInput {
+  displayName: String
+  description: String
+  companyId: Float
+  images: [String!]
+  address: String
+  lat: Float
+  lng: Float
+  id: Float!
+}
+
+input CreateApartmentInput {
+  displayName: String!
+  pricePerDay: Float!
+  area: Float!
+  sleepingUnits: Float!
+  aptFloor: Float!
+  aptNumber: Float!
+  accomodationId: Float!
+  type: SlotType!
+}
+
+input UpdateApartmentInput {
+  displayName: String
+  pricePerDay: Float
+  area: Float
+  sleepingUnits: Float
+  aptFloor: Float
+  aptNumber: Float
+  accomodationId: Float
+  type: SlotType
+  id: Float!
+}
+
+input CreateAddressInput {
+  address: String!
+  lat: Float!
+  lng: Float!
+  accomodationId: Float!
+}
+
+input UpdateAddressInput {
+  address: String
+  lat: Float
+  lng: Float
+  accomodationId: Float
+  id: Float!
+}
+
+input CreateBookingInput {
+  pricePerDay: Float!
+  totalPrice: Float!
+  startDate: DateTime!
+  endDate: DateTime!
+  phoneNumber: String!
+  apartmentId: Float!
+  customerId: String!
+}
+
+input UpdateBookingInput {
+  pricePerDay: Float
+  totalPrice: Float
+  startDate: DateTime
+  endDate: DateTime
+  phoneNumber: String
+  apartmentId: Float
+  customerId: String
+  id: Float!
+}

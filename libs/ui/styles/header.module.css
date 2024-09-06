@@ -1,0 +1,96 @@
+/* header.module.css */
+
+.header {
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for separation */
+  position: fixed; /* Fixed position at the top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure it's on top of other content */
+  padding: 10px 20px; /* Padding around the content */
+  backdrop-filter: blur(2px); /* Blurred background effect */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Optional border for better separation */
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between; /* Distribute space between logo and buttons */
+  align-items: center;
+  max-width: 1500px; /* Maximum width for the content */
+  margin: 0 auto; /* Center content */
+  height: 100%; /* Ensure full height */
+}
+
+.logo {
+  flex: -2; /* Allows logo to take up available space */
+}
+
+.logo img {
+  width: 60px; /* Width of the logo */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.sidebar {
+  flex: 0.5; /* Allows logo to take up available space */
+}
+
+.name {
+  flex: 12; /* Allows logo to take up available space */
+}
+
+.name img {
+  width: 100px; /* Width of the logo */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between buttons */
+}
+
+.buttonpos {
+  margin-top: 200px;
+}
+
+.backgr {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.button {
+  color: rgb(37, 37, 37);
+  margin-left: 20px;
+  padding: 8px 16px; /* Padding inside buttons */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 14px; /* Font size */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.buttonsidebar {
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.35s ease; /* Smooth background color transition */
+}
+
+.button-outlined {
+  border: 2px solid #000000; /* Outline border */
+  color: #252525; /* Text color */
+  background-color: transparent; /* Transparent background */
+}
+
+.button-outlined:hover {
+  background-color: #666768; /* Background color on hover */
+  color: #333333; /* Text color on hover */
+}
+
+.button-primary {
+  background-color: #2e2d2d; /* Primary button background */
+  color: #ffffff; /* Text color */
+}
+
+.button-primary:hover {
+  background-color: #979797; /* Darker shade on hover */
+}

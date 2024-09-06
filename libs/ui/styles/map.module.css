@@ -1,0 +1,32 @@
+/* styles.css */
+.mapoverlay {
+    position: absolute;
+    top: 120px; /* Adjust as needed */
+    left: 40px; /* Adjust as needed */
+    z-index: 10; /* Ensure it's above the map */
+    padding: 10px;
+    background: rgb(red, green, blue, 0.5); /* Optional: to make sure it's readable */
+    border-radius: 5px; /* Optional: for rounded corners */
+  }
+
+.searchbox {
+  color: black;
+}
+
+.textbox {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: transparent;
+  backdrop-filter: blur(2px);
+  outline-color: black;
+}
+
+.current {
+  position: absolute;
+  top: 650px; /* Adjust as needed */
+  left: 30px; /* Adjust as needed */
+  z-index: 10; /* Ensure it's above the map */
+  padding: 10px;
+  /* Optional: to make sure it's readable */
+  border-radius: 5px; /* Optional: for rounded corners */
+  background: rgb(red, green, blue, 0.5);
+}

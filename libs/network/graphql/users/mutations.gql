@@ -1,0 +1,58 @@
+mutation RegisterUser($registerUserInput: RegisterUserInput!) {
+  register(registerUserInput: $registerUserInput) {
+    uid
+    name
+    image
+  }
+#   query example:
+    # {
+    #   "registerUserInput": {
+    #     "email": "example@example2.com",
+    #     "name": "John Doe",
+    #     "password": "password",
+    #     "image": "https://example.com/avatar.png"
+    #   }
+    # }
+}
+
+mutation DeleteUser($uid: String!) {
+  removeUser(uid: $uid){
+    uid
+  }
+#   query example:
+#   {
+#     "uid": "5a676a3e-fc61-43c5-98b8-433fcaf35e72"
+#   }
+}
+
+
+mutation UpdateUser($updateUserInput: UpdateUserInput!){
+  updateUser(updateUserInput: $updateUserInput){
+    name
+  }
+#    query example:
+#    {
+#     "updateUserInput": {
+#         "uid": "9520063e-4d51-4061-bb34-d56f257e448b",
+#         "name": "Cork"
+#     }
+#   }
+}
+
+mutation Login($loginInput: LoginInput!) {
+  login(loginInput: $loginInput) {
+    token
+    user {
+      uid
+      name
+    }
+  }
+
+#   example query:
+#   {
+#     "loginInput": {
+#         "email": "example@example2.com",
+#         "password": "password"
+#     }
+#   }
+}

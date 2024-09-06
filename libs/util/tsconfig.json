@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "commonjs", // or "esnext", depending on your setup
+    "target": "es5", // or "es6" / "esnext", depending on your setup
+    // other options...
+    "jsx": "react-jsx"
+  }
+}

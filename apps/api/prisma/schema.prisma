@@ -1,0 +1,205 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgresdb:password@localhost:2010/postgresdb?schema=public"
+}
+
+model User {
+  uid       String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name  String?
+  image String?
+
+  Credentials  Credentials?
+  AuthProvider AuthProvider?
+  Admin        Admin?
+  Manager      Manager?
+  Customer     Customer?
+}
+
+model Admin {
+  uid  String @id
+  User User   @relation(fields: [uid], references: [uid])
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  Verifications Verification[]
+}
+
+model Credentials {
+  uid  String @id
+  User User   @relation(fields: [uid], references: [uid])
+
+  email        String @unique
+  passwordHash String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuthProvider {
+  uid String @id
+
+  type AuthProviderType
+  User User             @relation(fields: [uid], references: [uid])
+}
+
+enum AuthProviderType {
+  GOOGLE
+  CREDENTIALS
+}
+
+model Customer {
+  uid  String @id
+  User User   @relation(fields: [uid], references: [uid])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  displayName String?
+
+  Bookings Booking[]
+  Reviews  Review[]
+}
+
+model Manager {
+  uid  String @id
+  User User   @relation(fields: [uid], references: [uid])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  displayName String?
+
+  companyId Int?     @unique
+  Company   Company? @relation(fields: [companyId], references: [id])
+}
+
+model Company {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  displayName String?
+  description String?
+
+  Accomodations Accomodation[]
+  Managers      Manager[]
+}
+
+model Accomodation {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  displayName String?
+  description String?
+  images      String[]
+
+  companyId    Int
+  Company      Company       @relation(fields: [companyId], references: [id])
+  Address      Address?
+  Verification Verification?
+  Reviews      Review[]
+  Apartment    Apartment[]
+}
+
+model Address {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  address String
+  lat     Float
+  lng     Float
+
+  accomodationId Int          @unique
+  Accomodation   Accomodation @relation(fields: [accomodationId], references: [id])
+}
+
+model Apartment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  displayName String?
+  pricePerDay Float
+
+  area          Int?
+  sleepingUnits Int?
+  aptFloor      Int?
+  aptNumber     Int?
+
+  type ApartmentType @default(STUDIO)
+
+  accomodationId Int
+  Accomodation   Accomodation @relation(fields: [accomodationId], references: [id])
+  Bookings       Booking[]
+}
+
+model Booking {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pricePerDay Float?
+  totalPrice  Float?
+  startDate   DateTime
+  endDate     DateTime
+  phoneNumber String?
+
+  apartmentId Int
+  Apartment   Apartment @relation(fields: [apartmentId], references: [id])
+
+  customerId String
+  Customer   Customer @relation(fields: [customerId], references: [uid])
+
+  @@index([startDate, endDate])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rating  Int     @default(0)
+  comment String?
+
+  customerId String
+  Customer   Customer @relation(fields: [customerId], references: [uid])
+
+  accomodationId Int
+  Accomodation   Accomodation @relation(fields: [accomodationId], references: [id])
+}
+
+model Verification {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  verified Boolean @default(false)
+
+  adminId String
+  Admin   Admin  @relation(fields: [adminId], references: [uid])
+
+  accomodationId Int          @id
+  Accomodation   Accomodation @relation(fields: [accomodationId], references: [id])
+}
+
+enum ApartmentType {
+  STUDIO
+  ONE_BEDROOM
+  TWO_BEDROOM
+  THREE_BEDROOM
+  PENTHOUSE
+}

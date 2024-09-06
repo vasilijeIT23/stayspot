@@ -1,0 +1,19 @@
+query GetUser($uid: String!) {
+  user(uid: $uid){
+    uid
+    name
+    createdAt
+  }
+#   {
+#     "uid": "9520063e-4d51-4061-bb34-d56f257e448b"
+#   }
+}
+
+query GetAllUsers{
+  users {
+    uid
+    name
+    createdAt
+    updatedAt
+  }
+}
